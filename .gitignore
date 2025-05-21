@@ -1,0 +1,8 @@
+.\.github\**
+.\.vscode\**
+.\.idea\**
+
+#program specific
+.\**.toml
+.\**.lnk
+.\**.code-workspace
