@@ -74,6 +74,48 @@ Height = "720"
 
 ---
 
+## Command-Line Parameters
+
+- `--layout <index>`: Automatically select and apply a layout by its index (0-based) at startup. Skips interactive selection.
+- `--config <path>`: Specify a custom path for the configuration file (TOML). If not provided, defaults to `./layouts-config.toml` in the script directory.
+- `--no-preview`: Skip the preview step before applying a layout.
+
+### Example Usage
+
+```powershell
+# Apply layout 1 from a custom config file
+.\DisplayLayoutManager.ps1 --layout 1 --config "C:\MyConfigs\my-layouts.toml"
+
+# Apply layout 0 using the default config file
+.\DisplayLayoutManager.ps1 --layout 0
+```
+
+---
+
+## Shortcut Creation
+
+A helper script `CreateShortcut.ps1` is provided to create a Windows shortcut for launching DisplayLayoutManager with your preferred options.
+
+### Shortcut Options
+- **Shortcut Name:** You can specify the name of the shortcut file.
+- **Auto-Selected Layout:** Optionally set a layout index to auto-select at startup (or leave blank for interactive selection).
+- **Config File Path:** Optionally set a custom config file path (or leave blank for default).
+- **Keep PowerShell Open:** Optionally keep the PowerShell window open after execution (`-NoExit`).
+
+### How to Use
+1. Run the shortcut creation script:
+   ```powershell
+   .\CreateShortcut.ps1
+   ```
+2. Follow the prompts:
+   - Enter a shortcut name (without extension).
+   - Enter a layout index to auto-select (or leave blank).
+   - Enter a config file path (or leave blank for default).
+   - Choose whether to keep the PowerShell window open after execution.
+3. The shortcut will be created in the script directory with your chosen options.
+
+---
+
 ## How It Works
 
 - Uses Windows API (user32.dll) for window manipulation.
@@ -105,10 +147,12 @@ Height = "720"
 Created by Tsuki Kami
 - [Github](https://github.com/kami-tsuki)
 - [Web](https://tsuki.wtf)
-- [Contact/Support](mailto:support.lm@tsuki.wtf)---
+- [Contact/Support](mailto:support.lm@tsuki.wtf)
+
+---
 
 ## Contributions
 
 Feel free to fork and improve this script for your own needs!
-Give credit if you use or modify it. 
+Give credit if you use or modify it.
 

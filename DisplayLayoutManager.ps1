@@ -36,6 +36,22 @@ public class WindowManager {
 }
 "@
 
+# Parse command-line arguments for --layout <index>
+$optLayout = $null
+$optNoPreview = $false
+$optConfig = $null
+for ($i = 0; $i -lt $args.Length; $i++) {
+    if ($args[$i] -eq '--layout' -and ($i + 1) -lt $args.Length) {
+        $optLayout = $args[$i + 1]
+        $i++
+    } elseif ($args[$i] -eq '--no-preview') {
+        $optNoPreview = $true
+    } elseif ($args[$i] -eq '--config' -and ($i + 1) -lt $args.Length) {
+        $optConfig = $args[$i + 1]
+        $i++
+    }
+}
+
 # Function to read TOML configuration
 function Read-TomlConfig {
     param (
@@ -124,7 +140,7 @@ function Write-TomlConfig {
 # Function to capture current layout
 function Capture-CurrentLayout {
     param (
-        [string]$ConfigPath = ".\layouts-config.toml"
+        [string]$ConfigPath = $PSScriptRoot + "\layouts-config.toml"
     )
     $config = Read-TomlConfig -ConfigPath $ConfigPath
     if (-not $config) { $config = @{} }
@@ -402,7 +418,11 @@ Write-Host "=== Display Layout Manager ===" -ForegroundColor Cyan
 Add-Type -AssemblyName System.Windows.Forms
 
 # Get or create configuration
-$configPath = ".\layouts-config.toml"
+if ($optConfig) {
+    $configPath = $optConfig
+} else {
+    $configPath = $PSScriptRoot + "\layouts-config.toml"
+}
 $config = Read-TomlConfig -ConfigPath $configPath
 
 $interactive = $Host.Name -eq 'ConsoleHost'
@@ -448,7 +468,11 @@ if (-not $interactive) {
 }
 
 # Prompt user to select a layout
-$selection = Read-Host "`nSelect a layout to apply (0-$($layoutOptions.Count-1)), or 'C' to capture the current layout"
+if ($optLayout) {
+    $selection = $optLayout
+} else {
+    $selection = Read-Host "`nSelect a layout to apply (0-$($layoutOptions.Count-1)), or 'C' to capture the current layout"
+}
 
 if ($selection -eq "C" -or $selection -eq "c") {
     Capture-CurrentLayout -ConfigPath $configPath
@@ -469,15 +493,14 @@ if ($selection -eq "C" -or $selection -eq "c") {
 
 if ($selection -match '^[0-9]+$' -and [int]$selection -ge 0 -and [int]$selection -lt $layoutOptions.Count) {
     $selectedLayout = $layoutOptions[$selection].Name
+    if (-not $optNoPreview) {
+        Write-Host "Preview: Would apply layout '$selectedLayout'... (preview not implemented)" -ForegroundColor Yellow
+        # In the future, preview logic would go here
+    }
     Apply-Layout -LayoutName $selectedLayout -Config $config
     # Do not exit here, allow the user to run again if desired
 } else {
     Write-Error "Invalid selection"
 }
 
-
-
-
-
-
-
+$configPath = $configPath

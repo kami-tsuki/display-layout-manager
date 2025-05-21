@@ -4,13 +4,14 @@
 
 - [ ] **Script Parameter Support** _(Priority: High)_
   - [ ]  `--no-clear`/`-nc` option to prevent clearing the screen before displaying the layout.
-  - `--no-preview`/`-np` option to skip the layout preview. (when preview is implemented)
-  - `--layout <0|1|C>` option to specify the layout to apply.
-  - `--help`/`-h` option to display help information.
-  - `--version`/`-v` option to display the script version.
-  - `--config <path>` option to specify a custom configuration file path.
-  - `--debug` option to enable debug mode for verbose output.
-  - `--no-log` option to disable logging.
+  - [ ]  `--no-preview`/`-np` option to skip the layout preview. (when preview is implemented)
+  - [X]  `--layout <0|1|C>` option to specify the layout to apply.
+     - create should become another option later
+  - [ ]  `--help`/`-h` option to display help information.
+  - [ ]  `--version`/`-v` option to display the script version.
+  - [x]  `--config <path>` option to specify a custom configuration file path.
+  - [ ] `--debug` option to enable debug mode for verbose output.
+  - [ ]  `--no-log` option to disable logging.
 - [ ] **Paramter add in Shortcut Creator** _(Priority: High)_
   - Add the ability to create shortcuts with parameters for the script.
   - Also apply custom names and icons for the shortcuts.
